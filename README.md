@@ -22,7 +22,10 @@ Schedule
       * when state changes render will be called again and diff for virtual DOM is calculated and applied
       * use seconds elapsed example to show which parts of the DOM are updated
         * inspect element and add color style to span around changed seconds and show it remains unchanged
-* Live-Demo #1: Getting started
+  * Show full app
+    * Reference to other component: <TodoList items={this.state.items} />
+      * Uses TodoList class and adds items to props
+* Optionally Live-Demo #1: Getting started
   * JSX
   * http://facebook.github.io/react/docs/top-level-api.html
   * React.renderComponent(ReactComponent component, DOMElement container)
@@ -33,7 +36,16 @@ Schedule
     * model in plain JS
     * react works with all kinds of model technologies
     * uses 'extend' from utils extensively to work with immutable data structures
+  * js/app.jsx
+    * componentDidMount: routing
+    * render: creating the app
+    * Listening to model change: model.subscribe(render);
+    * setState might batch updates, so add a callback when you want to execute code when setState has done its work
+  * js/footer.jsx: nothing new here
+  * js/todoItem.jsx
+    * shouldComponentUpdate: performance optimization that checks if anything has changed at all
 * More
+    * React.addons.classSet: Utility function to set css classes
   * http://facebook.github.io/react/blog/2014/03/14/community-roundup-18.html
   * Chrome plugin: http://facebook.github.io/react/blog/2014/01/02/react-chrome-developer-tools.html
 
