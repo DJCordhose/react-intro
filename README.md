@@ -9,6 +9,7 @@ Schedule
 * Slides up to "Why another Web Framework?"
 * Find the use of react on Facebook
  * Open facebook.de and Dev Tools (maybe need to allow console for facebook)
+ * How many reactive elements? document.querySelectorAll('[data-reactid]').length
  * Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'});
  * setInterval(function() {Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'})}, 1000);
 * Concepts in slides
@@ -44,8 +45,24 @@ Schedule
   * js/footer.jsx: nothing new here
   * js/todoItem.jsx
     * shouldComponentUpdate: performance optimization that checks if anything has changed at all
+* Live-Demo #3: Server Side rendering
+  * start react-server-example in code (from https://www.npmjs.org/package/react-server-example)
+    * Change: deferred client side rendering (instead print out part for rendering on console)
+  * Load application in browser (localhost:3000)
+  * in Developer tools: Show there is no click handler attached
+  * Change color of an item
+  * start client side rendering (by executing printed rendering part)
+  * Show color stays the same
+  * in Developer tools: Show there is now is a click handler for the whole component
+  * Click and add items
+  * Show color still stays the same
 * More
     * React.addons.classSet: Utility function to set css classes
   * http://facebook.github.io/react/blog/2014/03/14/community-roundup-18.html
   * Chrome plugin: http://facebook.github.io/react/blog/2014/01/02/react-chrome-developer-tools.html
-
+   * http://augustl.com/blog/2014/jdk8_react_rendering_on_server/?utm_source=javascriptweekly&utm_medium=email
+      * Jdk 8, Nashorn, Closure, React.js
+   * https://news.ycombinator.com/item?id=7489959
+   * https://speakerdeck.com/shieldo/react-glasgow-js-1st-april-2014
+   * https://github.com/reactjs/express-react-views
+   * http://eflorenzano.com/blog/2014/04/10/react-part-2-build-system/
