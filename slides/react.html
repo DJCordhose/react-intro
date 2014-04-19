@@ -1,4 +1,3 @@
-<!--http://localhost:63342/JavaScript%20Training/#/-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -41,6 +40,7 @@
                 <small><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
                 </small>
             </p>
+            <p>Online version at: <a href="http://djcordhose.github.io/react-intro">http://djcordhose.github.io/react-intro</a></p>
         </section>
         <!--<section>-->
             <!--<h3>My philosophy for talks and workshops</h3>-->
@@ -57,6 +57,25 @@
         <section>
             <h2>Another Web Framework?</h2>
             <img src="react-tweet.png">
+        </section>
+        <section>
+            <h3>How many active elements are there on my / your facebook start page?</h3>
+            <ul>
+                <li class="fragment">Open facebook and open console
+                <li class="fragment">Activate console if required
+            </ul>
+            <pre class="fragment"><code class="javascript" contenteditable>
+// Count
+document.querySelectorAll('[data-reactid]').length
+
+// Color in red
+Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'});
+
+// Color even new reactive elements
+setInterval(function() {Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'})}, 1000)
+
+            </code></pre>
+            <p class="fragment">Credit goes to <a target="_blank" href="https://twitter.com/floydophone">Pete Hunt</a></p>
         </section>
         <section>
             <h3>Concepts</h3>
@@ -119,7 +138,7 @@ React.renderComponent(&lt;HelloMessage name="Olli" />, mountNode);
             <p><a href="../code/helloWorld2.html" target="_blank">Run</a></p>
             <ul>
                 <li class="fragment"><code>React.createClass</code>: creates a component class
-                <li class="fragment"><code>render</code>: method to display component
+                <li class="fragment"><code>render</code>: creates a virtual DOM tree (maybe using JSX)
                 <li class="fragment"><code>this.props</code> / input: something passed into component instance as input
             </ul>
         </section>
@@ -201,8 +220,30 @@ React.renderComponent(<TodoApp />, mountNode);
   }
 });
 </code></pre>
-            <p><a href="../code/todo1.html" target="_blank">Run</a></p>
+            <p><a href="../code/todo.html" target="_blank">Run</a></p>
         </section>
+            <section>
+                <h3>State Change and Rendering</h3>
+            <ul>
+                <li class="fragment">component data can be read using <code>this.state</code> and set using <code>this.setState</code>
+                <li class="fragment">when state changes
+                    <ul>
+                        <li class="fragment">render will be called again
+                        <li class="fragment">diff for virtual DOM is calculated and applied
+                        <li class="fragment">other parts of the DOM remain unchanged
+                        <li class="fragment">updates might be batched, add a callback when you want to execute code when setState has done its work
+                    </ul>
+                </li>
+                <li class="fragment">Experiment
+                    <ul>
+                        <li class="fragment">add an item to the todo list and give it color red in dev tools
+                        <li class="fragment">add another item and see first item remains red
+                        <li class="fragment">proves that this part of the DOM has not been re-rendered
+                    </ul>
+                </li>
+            </ul>
+            </section>
+
         </section>
 
         <!--<section>-->
@@ -217,17 +258,83 @@ React.renderComponent(<TodoApp />, mountNode);
             <!--</p>-->
         <!--</section>-->
         <section>
-            <h3>Server Side rendering</h3>
+            <section>
+                <h2>Live-Demo: Server Side rendering</h2>
 
-            <p><a target="_blank" href="https://www.npmjs.org/package/react-server-example">
-                https://www.npmjs.org/package/react-server-example</a></p>
+                <p><a target="_blank" href="https://www.npmjs.org/package/react-server-example">
+                    https://www.npmjs.org/package/react-server-example</a></p>
 
-            <p>Another example by Facebook engineer Pete Hunt<a target="_blank"
-                                                                href="https://github.com/petehunt/react-server-rendering-example">
-                https://github.com/petehunt/react-server-rendering-example</a>
-            </p>
+                <p>Another example by Facebook engineer Pete Hunt<a target="_blank"
+                                                                    href="https://github.com/petehunt/react-server-rendering-example">
+                    https://github.com/petehunt/react-server-rendering-example</a>
+                </p>
+            </section>
+            <section>
+                <h2>Steps: Setup</h2>
+                <ul>
+                    <li class="fragment">start react-server-example in code
+                        <ul>
+                            <li class="fragment">Change to original code: deferrred client side rendering
+                            <li class="fragment">instead prints out part for rendering on console
+                        </ul>
+                    </li>
+                    <li class="fragment">Application is in <code>myApp.js</code>
+                    <li class="fragment"><code>server.js</code> contains <code>React.renderComponentToString</code>
+                    <li class="fragment">Load application in browser (localhost:3000)
+                </ul>
+            </section>
+            <section>
+                <h2>Steps</h2>
+                <ul>
+                    <li class="fragment">in Developer tools: Show there is no click handler attached to button
+                    <li class="fragment">Change color of an item
+                    <li class="fragment">activate client side rendering (by executing printed rendering part)
+                    <li class="fragment">Show color stays the same - DOM has not been re-rendered
+                    <li class="fragment">in Developer tools: Show there is now is a click handler for the whole document
+                    <li class="fragment">Click and add items - works now
+                    <li class="fragment">Show color still stays the same
+                </ul>
+            </section>
         </section>
 
+            <section>
+                <h3>Links</h3>
+            <ul>
+                <li class="fragment"><a target="_blank" href="http://facebook.github.io/react/blog/2014/01/02/react-chrome-developer-tools.html">
+                    Chrome Dev Tools Extension</a>
+                <li class="fragment"><a target="_blank" href="http://facebook.github.io/react/blog/">
+                    React Blog</a>
+                <li class="fragment"><a target="_blank" href="https://news.ycombinator.com/item?id=7489959">
+                    The road to react 1.0</a>
+                <li class="fragment"><a target="_blank" href="https://speakerdeck.com/shieldo/react-glasgow-js-1st-april-2014">
+                    React Intro at Glasgow.js</a>
+                <li class="fragment"><a target="_blank" href="https://github.com/reactjs/express-react-views">
+                    React views for express</a>
+            </ul>
+            </section>
+        <section>
+            <h3>Comparing to AngularJS</h3>
+            <ul>
+                <li class="fragment">Just the View
+                <li class="fragment">Just One-Way-Binding (Two-Way using Add-On ReactLink)
+                <li class="fragment">Model and Routing can be anything
+                <li class="fragment">Could use Backbone or Director for complete application
+                <li class="fragment">Runs on client and on server with the same code
+                <li class="fragment">Can display several thousand active elements on a single page
+                <li class="fragment">Both use JSDoc type annotations
+            </ul>
+        </section>
+        <section>
+            <h3>Wrap-Up</h3>
+            <ul>
+                <li class="fragment">Just the V in MVC
+                <li class="fragment">React is heavily used in Facebook and Instagram
+                <li class="fragment">Changes to model will be rendered automatically
+                <li class="fragment">Browser DOM experiences minimal amount of updates
+                <li class="fragment">Can render both on server and on client side
+                <li class="fragment">Server side rendering for SEO or quick first page impression
+            </ul>
+        </section>
         <section>
             <h1>Thank you!</h1>
 
