@@ -4,9 +4,15 @@ react-intro
 Introduction to react
 
 
+Preparation
+-----------
+* While having internet connection for sure
+  * Open http://facebook.github.io/react/
+
+
 Schedule
 --------
-* Slides up to "Why another Web Framework?"
+* Slides up to "Another Web Framework?"
 * Find the use of react on Facebook
  * Open facebook.de and Dev Tools (maybe need to allow console for facebook)
  * How many reactive elements? document.querySelectorAll('[data-reactid]').length

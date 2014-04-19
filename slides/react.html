@@ -42,10 +42,10 @@
                 </small>
             </p>
         </section>
-        <section>
-            <h3>My philosophy for talks and workshops</h3>
-            <img src="Twitter-Talk-Philosophy.png" height="200">
-        </section>
+        <!--<section>-->
+            <!--<h3>My philosophy for talks and workshops</h3>-->
+            <!--<img src="Twitter-Talk-Philosophy.png" height="200">-->
+        <!--</section>-->
         <section>
             <h2>React</h2>
             <img src="http://facebook.github.io/react/img/logo_small.png">
@@ -65,8 +65,9 @@
                 <li class="fragment">Templates can be written in pure JavaScript or using the JSX template language
                     <ul>
                         <li class="fragment">JSX can be rendered on the fly or
-                        <li class="fragment">precompiled inro JS for production
+                        <li class="fragment">precompiled into JS for production
                     </ul>
+                </li>
                 <li class="fragment">Uses a virtual DOM (tree structure) as view representation
                 <li class="fragment">Changes to model will be rendered automatically
                 <li class="fragment">Browser DOM experiences minimal amount of updates
@@ -75,31 +76,148 @@
         </section>
 
         <section>
-            <h3>Live-Demo #0: Start Page</h3>
+            <h3>Hello World</h3>
+<pre><code class="html" contenteditable>&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;script src="http://fb.me/react-0.10.0.js">&lt;/script>
+    &lt;script src="http://fb.me/JSXTransformer-0.10.0.js">&lt;/script>
+&lt;/head>
+&lt;body>
+&lt;div id="example">&lt;/div>
+&lt;script type="text/jsx">
+      /** @jsx React.DOM */
+      React.renderComponent(
+        &lt;h1>Hello, world!&lt;/h1>,
+        document.getElementById('example')
+      );
+    &lt;/script>
+&lt;/body>
+&lt;/html>
+</code></pre>
+            <a href="../code/helloWorld.html" target="_blank">Run</a>
 
-            <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
+        </section>
+        <section>
+            <section>
+                <h2>Samples from React Start Page</h2>
+
+                <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
+            </section>
+        <section>
+            <h3>A Simple Component</h3>
+<pre><code class="html" contenteditable>/** @jsx React.DOM */
+var mountNode = document.getElementById('example');
+var HelloMessage = React.createClass({
+  render: function() {
+    return &lt;div>Hello {this.props.name}&lt;/div>;
+  }
+});
+
+React.renderComponent(&lt;HelloMessage name="Olli" />, mountNode);
+</code></pre>
+            <p><a href="../code/helloWorld2.html" target="_blank">Run</a></p>
+            <ul>
+                <li class="fragment"><code>React.createClass</code>: creates a component class
+                <li class="fragment"><code>render</code>: method to display component
+                <li class="fragment"><code>this.props</code> / input: something passed into component instance as input
+            </ul>
+        </section>
+        <section>
+            <h3>A Simple Component - Compiled</h3>
+<pre><code class="html" contenteditable>var mountNode = document.getElementById('example');
+
+var HelloMessage = React.createClass({displayName: 'HelloMessage',
+    render: function() {
+        return React.DOM.div(null, "Hello ", this.props.name);
+    }
+});
+
+React.renderComponent(HelloMessage( {name:"Olli"} ), mountNode);
+</code></pre>
+            <p><a href="../code/helloWorld2Compiled.html" target="_blank">Run</a></p>
+            <ul>
+                <li class="fragment"><code>React.renderComponent(ReactComponent component, DOMElement container)</code>: renders a component into a DOM element
+                <li class="fragment"><code>React.renderComponentToString</code>: for server side rendering
+                <li class="fragment"><a href="http://facebook.github.io/react/docs/top-level-api.html" target="_blank">React: Top-Level API</a>
+            </ul>
         </section>
 
         <section>
-            <h3>Live-Demo #1: Getting started</h3>
+            <h3>Rendering a list</h3>
+<pre><code class="html" contenteditable>var TodoList = React.createClass({
+  render: function() {
+    var createItem = function(itemText) {
+      return &lt;li>{itemText}&lt;/li>;
+    };
+    return &lt;ul>{this.props.items.map(createItem)}&lt;/ul>;
+  }
+});
 
-            <p><a target="_blank" href="http://facebook.github.io/react/docs/getting-started.html">http://facebook.github.io/react/docs/getting-started.html</a>
-            </p>
-        </section>
-
-        <section>
-            <h3>Live-Demo #2: TodoMVC in react</h3>
-
-            <p><a target="_blank" href="https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react">
-                https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react</a></p>
-
-            <p>Uses <a target="_blank" href="https://github.com/flatiron/director">
-                https://github.com/flatiron/director</a>
-                for routing on client and on server side
-            </p>
+</code></pre>
         </section>
         <section>
-            <h3>Live-Demo #3: Server Side rendering</h3>
+            <h3>Embedding a component</h3>
+<pre><code class="html" contenteditable>var TodoApp = React.createClass({
+  getInitialState: function() {
+    return {items: ['Do stuff', 'Do more stuff']};
+    },
+  render: function() {
+    return (
+      &lt;div>
+        &lt;h3>TODO&lt;/h3>
+        &lt;TodoList items={this.state.items} />
+      &lt;/div>
+    );
+  }
+});
+React.renderComponent(<TodoApp />, mountNode);
+
+</code></pre>
+            <p><a href="../code/embedding.html" target="_blank">Run</a></p>
+        </section>
+        <section>
+            <h3>Update to state</h3>
+<pre><code class="html" contenteditable>var TodoApp = React.createClass({
+  onChange: function(e) {
+    this.setState({text: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var nextItems = this.state.items.concat([this.state.text]);
+    this.setState({items: nextItems, text: ''});
+  },
+  render: function() {
+    return (
+      &lt;div>
+        &lt;h3>TODO&lt;/h3>
+        &lt;TodoList items={this.state.items} />
+        &lt;form onSubmit={this.handleSubmit}>
+          &lt;input onChange={this.onChange} value={this.state.text} />
+          &lt;button>{'Add #' + (this.state.items.length + 1)}&lt;/button>
+        &lt;/form>
+      &lt;/div>
+    );
+  }
+});
+</code></pre>
+            <p><a href="../code/todo1.html" target="_blank">Run</a></p>
+        </section>
+        </section>
+
+        <!--<section>-->
+            <!--<h3>Live-Demo #2: TodoMVC in react</h3>-->
+
+            <!--<p><a target="_blank" href="https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react">-->
+                <!--https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react</a></p>-->
+
+            <!--<p>Uses <a target="_blank" href="https://github.com/flatiron/director">-->
+                <!--https://github.com/flatiron/director</a>-->
+                <!--for routing on client and on server side-->
+            <!--</p>-->
+        <!--</section>-->
+        <section>
+            <h3>Server Side rendering</h3>
 
             <p><a target="_blank" href="https://www.npmjs.org/package/react-server-example">
                 https://www.npmjs.org/package/react-server-example</a></p>
