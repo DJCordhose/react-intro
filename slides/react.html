@@ -10,7 +10,8 @@
 
     <link rel="stylesheet" href="../reveal.js/css/reveal.min.css">
     <!--<link rel="stylesheet" href="../reveal.js/css/theme/sky.css" id="theme">-->
-    <link rel="stylesheet" href="../reveal.js/css/theme/moon.css" id="theme">
+    <!--<link rel="stylesheet" href="../reveal.js/css/theme/moon.css" id="theme">-->
+    <link rel="stylesheet" href="../reveal.js/css/theme/night.css" id="theme">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
@@ -246,57 +247,147 @@ React.renderComponent(<TodoApp />, mountNode);
 
         </section>
 
-        <!--<section>-->
-            <!--<h3>Live-Demo #2: TodoMVC in react</h3>-->
+<section>
+<section>
+    <h2>Comparing to other SPA frameworks</h2>
+    <ul>
+        <li class="fragment">No Framework
+        <li class="fragment">jQuery
+        <li class="fragment">AngularJS
+        <li class="fragment">Ext.js
+    </ul>
+</section>
 
-            <!--<p><a target="_blank" href="https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react">-->
-                <!--https://github.com/tastejs/todomvc/tree/gh-pages/architecture-examples/react</a></p>-->
-
-            <!--<p>Uses <a target="_blank" href="https://github.com/flatiron/director">-->
-                <!--https://github.com/flatiron/director</a>-->
-                <!--for routing on client and on server side-->
-            <!--</p>-->
-        <!--</section>-->
         <section>
-            <section>
-                <h2>Live-Demo: Server Side rendering</h2>
+            <h2>React Hello World (as a reference)</h2>
+<pre><code class="html" contenteditable>/** @jsx React.DOM */
+var mountNode = document.getElementById('example');
+var HelloMessage = React.createClass({
+  render: function() {
+    return &lt;div>Hello {this.props.name}&lt;/div>;
+  }
+});
 
-                <p><a target="_blank" href="https://www.npmjs.org/package/react-server-example">
-                    https://www.npmjs.org/package/react-server-example</a></p>
-
-                <p>Another example by Facebook engineer Pete Hunt<a target="_blank"
-                                                                    href="https://github.com/petehunt/react-server-rendering-example">
-                    https://github.com/petehunt/react-server-rendering-example</a>
-                </p>
-            </section>
-            <section>
-                <h2>Steps: Setup</h2>
-                <ul>
-                    <li class="fragment">start react-server-example in code
-                        <ul>
-                            <li class="fragment">Change to original code: deferrred client side rendering
-                            <li class="fragment">instead prints out part for rendering on console
-                        </ul>
-                    </li>
-                    <li class="fragment">Application is in <code>myApp.js</code>
-                    <li class="fragment"><code>server.js</code> contains <code>React.renderComponentToString</code>
-                    <li class="fragment">Load application in browser (localhost:3000)
-                </ul>
-            </section>
-            <section>
-                <h2>Steps</h2>
-                <ul>
-                    <li class="fragment">in Developer tools: Show there is no click handler attached to button
-                    <li class="fragment">Change color of an item
-                    <li class="fragment">activate client side rendering (by executing printed rendering part)
-                    <li class="fragment">Show color stays the same - DOM has not been re-rendered
-                    <li class="fragment">in Developer tools: Show there is now is a click handler for the whole document
-                    <li class="fragment">Click and add items - works now
-                    <li class="fragment">Show color still stays the same
-                </ul>
-            </section>
+React.renderComponent(&lt;HelloMessage name="Olli" />, mountNode);
+</code></pre>
+            <p><a href="../code/helloWorld2.html" target="_blank">Run</a></p>
         </section>
+    <section>
+        <h2>Hello World with no Framework</h2>
+        <pre><code class="xml" contenteditable>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World!&lt;/title&gt;
+  &lt;/head&gt;
+    &lt;body&gt;
+      &lt;div id="log">&lt;/div>
+      &lt;script&gt;
+          var element = document.getElementById("log");
+          element.innerHTML = "&lt;h1>Hello World&lt;/h1>";
+      &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+                        <a href="../HelloWorld/helloworld2.html">Run</a>
+                    </section>
 
+    <section>
+        <h2>Hello World jQuery</h2>
+        <pre><code class="xml" contenteditable>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Hello World jQuery!&lt;/title&gt;
+    &lt;body&gt;
+      &lt;div id="log">&lt;/div>
+      &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js">&lt;/script>
+
+      &lt;script&gt;
+        $(document).ready(function(){
+            $("#log").html("&lt;h1>Hello World&lt;/h1>");
+        });
+      &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+                        <a href="../HelloWorld/helloworld-jQuery.html">Run</a>
+                    </section>
+
+    <section>
+        <h3>Option: AngularJS</h3>
+        <h4>HTML enhanced for web apps!</h4>
+        <img src="angular.png">
+        <p><a target="_blank" href="http://angularjs.org/">http://angularjs.org</a></p>
+    </section>
+                <section>
+                    <h3>Hello World AngularJS</h3>
+<pre><code class="xml" contenteditable>&lt;html ng-app>
+&lt;head>
+    &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js">&lt;/script>
+    &lt;script src="controller.js">&lt;/script>
+&lt;/head>
+&lt;body ng-controller="HelloController as helloController">
+    &lt;input ng-model="helloController.greeting.text">
+    &lt;p>{{helloController.greeting.text}}, World!&lt;/p>
+    &lt;input type="button" value="Clear" ng-click="helloController.clear()">
+    &lt;/body>
+&lt;/html></code></pre>
+<pre><code class="javascript" contenteditable>function HelloController() {
+    this.greeting = {
+        text: 'Hello'
+    };
+}
+HelloController.prototype.clear = function() {
+    this.greeting.text = '';
+};
+</code></pre>
+        <a href="../HelloWorld/helloWorldAngular3.html">Run</a>
+                </section>
+
+    <section>
+    <h3>Hello World ExtJS</h3>
+<pre><code class="javascript" contenteditable>Ext.application({
+    name: 'Hello World',
+
+    launch: function() {
+        Ext.create('Ext.container.Viewport', {
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'panel',
+                    title: 'Hello World',
+                    html : 'Hello!'
+                }
+            ]
+        });
+    }
+});</code></pre>
+    <a href="../HelloWorld/helloWorldExtjs.html">Run</a>
+
+                    </section>
+
+<section>
+    <h3>Summary</h3>
+    <ul>
+        <li class="fragment">No Framework: hubris or application is very simple or all other frameworks do not suit problem (really?)
+        <li class="fragment">jQuery: No abstraction from DOM, consider Twitter Flight to add structure when project grows
+        <li class="fragment">Angular.js / Ember / Knockout / Backbone: For larger SPAs
+        <li class="fragment">Ext.js: Business applications
+        <li class="fragment">React: Highest demand for performance, server side rendering, missing parts available via Backbone
+    </ul>
+</section>
+</section>
+        <section>
+            <h3>Wrap-Up</h3>
+            <ul>
+                <li class="fragment">Just the V in MVC
+                <li class="fragment">One-Way-Binding
+                <li class="fragment">React is heavily used in Facebook and Instagram
+                <li class="fragment">Changes to model will be rendered automatically
+                <li class="fragment">Browser DOM experiences minimal amount of updates
+                <li class="fragment">Can render both on server and on client side
+                <li class="fragment">Server side rendering for SEO or quick first page impression
+            </ul>
+        </section>
             <section>
                 <h3>Links</h3>
             <ul>
@@ -312,29 +403,6 @@ React.renderComponent(<TodoApp />, mountNode);
                     React views for express</a>
             </ul>
             </section>
-        <section>
-            <h3>Comparing to AngularJS</h3>
-            <ul>
-                <li class="fragment">Just the View
-                <li class="fragment">Just One-Way-Binding (Two-Way using Add-On ReactLink)
-                <li class="fragment">Model and Routing can be anything
-                <li class="fragment">Could use Backbone or Director for complete application
-                <li class="fragment">Runs on client and on server with the same code
-                <li class="fragment">Can display several thousand active elements on a single page
-                <li class="fragment">Both use JSDoc type annotations
-            </ul>
-        </section>
-        <section>
-            <h3>Wrap-Up</h3>
-            <ul>
-                <li class="fragment">Just the V in MVC
-                <li class="fragment">React is heavily used in Facebook and Instagram
-                <li class="fragment">Changes to model will be rendered automatically
-                <li class="fragment">Browser DOM experiences minimal amount of updates
-                <li class="fragment">Can render both on server and on client side
-                <li class="fragment">Server side rendering for SEO or quick first page impression
-            </ul>
-        </section>
         <section>
             <h1>Thank you!</h1>
 
