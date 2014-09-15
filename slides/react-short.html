@@ -50,12 +50,7 @@
                 <small><a href="http://zeigermann.eu">Oliver Zeigermann</a> / <a href="http://twitter.com/djcordhose">@DJCordhose</a>
                 </small>
             </p>
-            <p>Online version at: <a href="http://djcordhose.github.io/react-intro">http://djcordhose.github.io/react-intro</a></p>
         </section>
-        <!--<section>-->
-            <!--<h3>My philosophy for talks and workshops</h3>-->
-            <!--<img src="Twitter-Talk-Philosophy.png" height="200">-->
-        <!--</section>-->
         <section>
             <h2>React</h2>
             <img src="http://facebook.github.io/react/img/logo_small.png">
@@ -63,29 +58,6 @@
             <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
 
             <p><a target="_blank" href="https://github.com/facebook/react">https://github.com/facebook/react</a></p>
-        </section>
-        <section>
-            <h2>Another Web Framework?</h2>
-            <img src="react-tweet.png">
-        </section>
-        <section>
-            <h3>How many active elements are there on my / your facebook start page?</h3>
-            <ul>
-                <li class="fragment">Open facebook and open console
-                <li class="fragment">Activate console if required
-            </ul>
-            <pre class="fragment"><code class="javascript" contenteditable>
-// Count
-document.querySelectorAll('[data-reactid]').length
-
-// Color in red
-Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'});
-
-// Color even new reactive elements
-setInterval(function() {Array.prototype.slice.call(document.querySelectorAll('[data-reactid]')).forEach(function (node) {node.style.color = 'red'})}, 1000)
-
-            </code></pre>
-            <p class="fragment">Credit goes to <a target="_blank" href="https://twitter.com/floydophone">Pete Hunt</a></p>
         </section>
         <section>
             <h3>Concepts</h3>
@@ -97,9 +69,9 @@ setInterval(function() {Array.prototype.slice.call(document.querySelectorAll('[d
                         <li class="fragment">precompiled into JS for production
                     </ul>
                 </li>
-                <li class="fragment">Component based
                 <li class="fragment">Uses a virtual DOM (tree structure) as view representation
-                <li class="fragment">Changes to model will be rendered automatically
+                <li class="fragment">One-way data-binding: Changes to state will be rendered automatically
+                <li class="fragment">Smart diffing algorithm computes the changes between old and new virtual DOM
                 <li class="fragment">Browser DOM experiences minimal amount of updates
                 <li class="fragment">Runs both on server and on client side
             </ul>
@@ -128,12 +100,6 @@ setInterval(function() {Array.prototype.slice.call(document.querySelectorAll('[d
             <a href="../code/helloWorld.html" target="_blank">Run</a>
 
         </section>
-        <section>
-            <section>
-                <h2>Samples from React Start Page</h2>
-
-                <p><a target="_blank" href="http://facebook.github.io/react/">http://facebook.github.io/react/</a></p>
-            </section>
         <section>
             <h3>A Simple Component</h3>
 <pre><code class="html" contenteditable>/** @jsx React.DOM */
@@ -175,7 +141,7 @@ React.renderComponent(HelloMessage( {name:"Olli"} ), mountNode);
 
         <section>
             <h3>Rendering a list</h3>
-<pre><code class="html" contenteditable>var TodoList = React.createClass({
+<pre><code class="javascript" contenteditable>var TodoList = React.createClass({
   render: function() {
     var createItem = function(itemText) {
       return &lt;li>{itemText}&lt;/li>;
@@ -183,7 +149,7 @@ React.renderComponent(HelloMessage( {name:"Olli"} ), mountNode);
     return &lt;ul>{this.props.items.map(createItem)}&lt;/ul>;
   }
 });
-
+&lt;TodoList items={['Stuff', 'More Stuff']} />
 </code></pre>
         </section>
         <section>
@@ -201,23 +167,15 @@ React.renderComponent(HelloMessage( {name:"Olli"} ), mountNode);
     );
   }
 });
-React.renderComponent(<TodoApp />, mountNode);
+React.renderComponent(&lt;TodoApp />, mountNode);
 
 </code></pre>
             <p><a href="../code/embedding.html" target="_blank">Run</a></p>
         </section>
         <section>
             <h3>Update to state</h3>
-<pre><code class="html" contenteditable>var TodoApp = React.createClass({
-  onChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var nextItems = this.state.items.concat([this.state.text]);
-    this.setState({items: nextItems, text: ''});
-  },
-  render: function() {
+<pre class="fragment"><code class="html" contenteditable>var TodoApp = React.createClass({</code></pre>
+<pre class="fragment"><code class="html" contenteditable>  render: function() {
     return (
       &lt;div>
         &lt;h3>TODO&lt;/h3>
@@ -228,6 +186,15 @@ React.renderComponent(<TodoApp />, mountNode);
         &lt;/form>
       &lt;/div>
     );
+  }
+</code></pre>
+<pre class="fragment"><code class="html" contenteditable>  onChange: function(e) {
+    this.setState({text: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var nextItems = this.state.items.concat([this.state.text]);
+    this.setState({items: nextItems, text: ''});
   }
 });
 </code></pre>
@@ -247,150 +214,20 @@ React.renderComponent(<TodoApp />, mountNode);
                 </li>
                 <li class="fragment">Experiment
                     <ul>
-                        <li class="fragment">add an item to the todo list and give it color red in dev tools
-                        <li class="fragment">add another item and see first item remains red
-                        <li class="fragment">proves that this part of the DOM has not been re-rendered
+                        <li class="fragment">use todo list app and add DOM breakpoints (modify, add, remove) to div containing list in dev tools
+                        <li class="fragment">add another item and make sure there are just a single addition for the item and a single update for the text of the button
                     </ul>
                 </li>
             </ul>
             </section>
 
-        </section>
-
-<section>
-<section>
-    <h2>Comparing to other SPA frameworks</h2>
-    <ul>
-        <li class="fragment">No Framework
-        <li class="fragment">jQuery
-        <li class="fragment">AngularJS
-        <li class="fragment">Ext.js
-    </ul>
-</section>
-
-        <section>
-            <h2>React Hello World (as a reference)</h2>
-<pre><code class="html" contenteditable>/** @jsx React.DOM */
-var mountNode = document.getElementById('example');
-var HelloMessage = React.createClass({
-  render: function() {
-    return &lt;div>Hello {this.props.name}&lt;/div>;
-  }
-});
-
-React.renderComponent(&lt;HelloMessage name="Olli" />, mountNode);
-</code></pre>
-            <p><a href="../code/helloWorld2.html" target="_blank">Run</a></p>
-        </section>
-    <section>
-        <h2>Hello World with no Framework</h2>
-        <pre><code class="xml" contenteditable>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Hello World!&lt;/title&gt;
-  &lt;/head&gt;
-    &lt;body&gt;
-      &lt;div id="log">&lt;/div>
-      &lt;script&gt;
-          var element = document.getElementById("log");
-          element.innerHTML = "&lt;h1>Hello World&lt;/h1>";
-      &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-                        </code></pre>
-                        <a href="../HelloWorld/helloworld2.html">Run</a>
-                    </section>
-
-    <section>
-        <h2>Hello World jQuery</h2>
-        <pre><code class="xml" contenteditable>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Hello World jQuery!&lt;/title&gt;
-    &lt;body&gt;
-      &lt;div id="log">&lt;/div>
-      &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js">&lt;/script>
-
-      &lt;script&gt;
-        $(document).ready(function(){
-            $("#log").html("&lt;h1>Hello World&lt;/h1>");
-        });
-      &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-                        </code></pre>
-                        <a href="../HelloWorld/helloworld-jQuery.html">Run</a>
-                    </section>
-
-    <section>
-        <h3>Option: AngularJS</h3>
-        <h4>HTML enhanced for web apps!</h4>
-        <img src="angular.png">
-        <p><a target="_blank" href="http://angularjs.org/">http://angularjs.org</a></p>
-    </section>
-                <section>
-                    <h3>Hello World AngularJS</h3>
-<pre><code class="xml" contenteditable>&lt;html ng-app>
-&lt;head>
-    &lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js">&lt;/script>
-    &lt;script src="controller.js">&lt;/script>
-&lt;/head>
-&lt;body ng-controller="HelloController as helloController">
-    &lt;input ng-model="helloController.greeting.text">
-    &lt;p>{{helloController.greeting.text}}, World!&lt;/p>
-    &lt;input type="button" value="Clear" ng-click="helloController.clear()">
-    &lt;/body>
-&lt;/html></code></pre>
-<pre><code class="javascript" contenteditable>function HelloController() {
-    this.greeting = {
-        text: 'Hello'
-    };
-}
-HelloController.prototype.clear = function() {
-    this.greeting.text = '';
-};
-</code></pre>
-        <a href="../HelloWorld/helloWorldAngular3.html">Run</a>
-                </section>
-
-    <section>
-    <h3>Hello World ExtJS</h3>
-<pre><code class="javascript" contenteditable>Ext.application({
-    name: 'Hello World',
-
-    launch: function() {
-        Ext.create('Ext.container.Viewport', {
-            layout: 'fit',
-            items: [
-                {
-                    xtype: 'panel',
-                    title: 'Hello World',
-                    html : 'Hello!'
-                }
-            ]
-        });
-    }
-});</code></pre>
-    <a href="../HelloWorld/helloWorldExtjs.html">Run</a>
-
-                    </section>
-
-<section>
-    <h3>Summary</h3>
-    <ul>
-        <li class="fragment">No Framework: hubris or application is very simple or all other frameworks do not suit problem (really?)
-        <li class="fragment">jQuery: No abstraction from DOM, consider Twitter Flight to add structure when project grows
-        <li class="fragment">Angular.js / Ember / Knockout / Backbone: For larger SPAs
-        <li class="fragment">Ext.js: Business applications
-        <li class="fragment">React: Highest demand for performance, server side rendering, missing parts available via Backbone or Flux
-    </ul>
-</section>
-</section>
         <section>
             <h3>Wrap-Up</h3>
             <ul>
                 <li class="fragment">Just the V in MVC
                 <li class="fragment">One-Way-Binding
+                <li class="fragment">Minimal API for simplicity
+                <li class="fragment">Explicit code to avoid magic
                 <li class="fragment">React is heavily used in Facebook and Instagram
                 <li class="fragment">Changes to model will be rendered automatically
                 <li class="fragment">Browser DOM experiences minimal amount of updates
@@ -401,20 +238,10 @@ HelloController.prototype.clear = function() {
             <section>
                 <h3>Links</h3>
             <ul>
-                <li class="fragment"><a target="_blank" href="http://bripkens.github.io/relato/">Sample of fast rendering of paging</a> using
-                    <a target="_blank" href="https://github.com/bripkens/relato/blob/gh-pages/js/index.js">React</a>
                 <li class="fragment"><a target="_blank" href="http://facebook.github.io/react/blog/2014/01/02/react-chrome-developer-tools.html">
                     Chrome Dev Tools Extension</a>
                 <li class="fragment"><a target="_blank" href="http://facebook.github.io/react/blog/">
                     React Blog</a>
-                <li class="fragment"><a target="_blank" href="https://news.ycombinator.com/item?id=7489959">
-                    The road to react 1.0</a>
-                <li class="fragment"><a target="_blank" href="https://speakerdeck.com/shieldo/react-glasgow-js-1st-april-2014">
-                    React Intro at Glasgow.js</a>
-                <li class="fragment"><a target="_blank" href="https://github.com/reactjs/express-react-views">
-                    React views for express</a>
-                <li class="fragment"><a target="_blank" href="http://bensmithett.github.io/going-isomorphic-with-react/">
-                    Going Isomorphic with React</a>
                 <li class="fragment"><a target="_blank" href="http://facebook.github.io/flux/docs/overview.html">
                     Application architecture at Facebook with Flux</a>
             </ul>
